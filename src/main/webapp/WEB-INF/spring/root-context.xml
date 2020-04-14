@@ -3,6 +3,61 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- Root Context: dao객체 service객체 -->
 		
+	<!-- MemberDAO memberDAO = new MemberDAO()와 같은코드이다. -->
+	<bean class="com.sy.s3.member.MemberDAO" id="memberDAO"></bean>
+	
+	<!-- MemberService memberService = new MemberService -->
+	<bean class="com.sy.s3.member.MemberService" id="memberService">
+	
+	<!-- memberService.setMemberDAO(memberDAO) -->
+	<property name="memberDAO" ref="memberDAO"></property>
+	</bean>
+	
+	
+	
+	<!-- Left Arm Reference형태이지만 Primitive타입-->
+	<bean class="com.sy.s3.robot.LeftArm" id="leftArm">
+		<property name="name" value="iu"></property>
+		<property name="size" value="20"></property>
+	</bean>
+	
+		<!-- Right Arm default생성자 호출해야함-->
+	<bean class="com.sy.s3.robot.RightArm" id="rightArm">
+		<!-- method.1-->	
+		<constructor-arg name="color" value="red"></constructor-arg>
+		<constructor-arg name="power" value="4"></constructor-arg>
+		 
+		 <!-- method.2
+		 <constructor-arg index="0" value="5"></constructor-arg>
+		 <constructor-arg index="1" value="red"></constructor-arg>
+		  -->
+		  <!-- method.3 (같은 데이터타입이 2개이상 있을때 쓰면 안된다.)
+		  <constructor-arg type="java.lang.Integer" value="20"></constructor-arg>
+		  <constructor-arg type="java.lang.String" value="red"></constructor-arg>
+		   -->
+	</bean>
+	
+	
+	
+	
+	<bean class="com.sy.s3.robot.Robot" id="robot1">
+	<!-- 생성자 -->
+		<constructor-arg name="leftArm" ref="leftArm"></constructor-arg>
+		<constructor-arg name="rightArm" ref="rightArm"></constructor-arg>
+	</bean>
+	
+	
+	<bean class="com.sy.s3.robot.Robot" id="robot2">
+	<!-- setter -->
+		<property name="leftArm" ref="leftArm"></property>
+		<property name="rightArm" ref="rightArm"></property>
+	</bean>
+
+
+
+
+
+
 </beans>
